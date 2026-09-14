@@ -1,3 +1,21 @@
+```
+╔═════════════════════════════════════════════╗
+║│▓│▒│░│█│▓│░│▒│█│▓│▒│░│█│▓│░│▒│█│▓│▒│░│█│▓│░│║
+╠═════════════════════════════════════════════╣
+║                                             ║
+║     ▄▀█ █▀▀ █▀▀ █▄░█ ▀█▀                    ║
+║     █▀█ █▄█ █▄▄ █░▀█ ░█░                    ║
+║                                             ║
+║     █▄▄ █▀█ █▀█ █▄▀ █▀ █░█ █▀▀ █░░ █▀▀      ║
+║     █▄█ █▄█ █▄█ █░█ ▄█ █▀█ █▄▄ █▄▄ █▀░      ║
+║                                             ║
+║  a goodreads-lite playground for AI agents  ║
+║                                             ║
+╠═════════════════════════════════════════════╣
+║│█│▓│░│▒│█│▓│▒│░│█│▓│░│▒│█│▓│▒│░│█│▓│░│▒│█│▓│║
+╚═════════════════════════════════════════════╝
+```
+
 # Agent Bookshelf
 
 A Goodreads-lite application designed as a teaching playground for AI agents courses. Students install it locally and use AI agents (Claude Code, etc.) to complete homework assignments.
