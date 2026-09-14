@@ -1,0 +1,266 @@
+import { Router, Request, Response } from 'express';
+import { getDb } from '../db/index.js';
+import * as Book from '../models/book.js';
+import * as User from '../models/user.js';
+import * as Review from '../models/review.js';
+import * as Shelf from '../models/shelf.js';
+
+const router = Router();
+
+// Books API
+router.get('/books', (req: Request, res: Response) => {
+  const db = getDb();
+  const books = Book.getAllBooks(db);
+  res.json(books);
+});
+
+router.get('/books/:id', (req: Request, res: Response) => {
+  const db = getDb();
+  const bookId = parseInt(req.params.id, 10);
+  const book = Book.getBookById(db, bookId);
+
+  if (!book) {
+    return res.status(404).json({ error: 'Book not found' });
+  }
+
+  res.json(book);
+});
+
+router.post('/books', (req: Request, res: Response) => {
+  const db = getDb();
+  const { title, author, isbn, cover_url, description, published_year } = req.body;
+
+  if (!title || !author) {
+    return res.status(400).json({ error: 'Title and author are required' });
+  }
+
+  const book = Book.createBook(db, { title, author, isbn, cover_url, description, published_year });
+  res.status(201).json(book);
+});
+
+router.patch('/books/:id', (req: Request, res: Response) => {
+  const db = getDb();
+  const bookId = parseInt(req.params.id, 10);
+  const book = Book.updateBook(db, bookId, req.body);
+
+  if (!book) {
+    return res.status(404).json({ error: 'Book not found' });
+  }
+
+  res.json(book);
+});
+
+router.delete('/books/:id', (req: Request, res: Response) => {
+  const db = getDb();
+  const bookId = parseInt(req.params.id, 10);
+  const deleted = Book.deleteBook(db, bookId);
+
+  if (!deleted) {
+    return res.status(404).json({ error: 'Book not found' });
+  }
+
+  res.status(204).send();
+});
+
+// Users API
+router.get('/users', (req: Request, res: Response) => {
+  const db = getDb();
+  const users = User.getAllUsers(db);
+  res.json(users);
+});
+
+router.get('/users/:id', (req: Request, res: Response) => {
+  const db = getDb();
+  const userId = parseInt(req.params.id, 10);
+  const user = User.getUserById(db, userId);
+
+  if (!user) {
+    return res.status(404).json({ error: 'User not found' });
+  }
+
+  res.json(user);
+});
+
+router.post('/users', (req: Request, res: Response) => {
+  const db = getDb();
+  const { username, displayName } = req.body;
+
+  if (!username || !displayName) {
+    return res.status(400).json({ error: 'Username and displayName are required' });
+  }
+
+  const user = User.createUser(db, username, displayName);
+  res.status(201).json(user);
+});
+
+router.patch('/users/:id', (req: Request, res: Response) => {
+  const db = getDb();
+  const userId = parseInt(req.params.id, 10);
+  const user = User.updateUser(db, userId, req.body);
+
+  if (!user) {
+    return res.status(404).json({ error: 'User not found' });
+  }
+
+  res.json(user);
+});
+
+router.delete('/users/:id', (req: Request, res: Response) => {
+  const db = getDb();
+  const userId = parseInt(req.params.id, 10);
+  const deleted = User.deleteUser(db, userId);
+
+  if (!deleted) {
+    return res.status(404).json({ error: 'User not found' });
+  }
+
+  res.status(204).send();
+});
+
+// Reviews API
+router.get('/reviews/book/:bookId', (req: Request, res: Response) => {
+  const db = getDb();
+  const bookId = parseInt(req.params.bookId, 10);
+  const reviews = Review.getReviewsByBookId(db, bookId);
+  res.json(reviews);
+});
+
+router.get('/reviews/user/:userId', (req: Request, res: Response) => {
+  const db = getDb();
+  const userId = parseInt(req.params.userId, 10);
+  const reviews = Review.getReviewsByUserId(db, userId);
+  res.json(reviews);
+});
+
+router.get('/reviews/:id', (req: Request, res: Response) => {
+  const db = getDb();
+  const reviewId = parseInt(req.params.id, 10);
+  const review = Review.getReviewById(db, reviewId);
+
+  if (!review) {
+    return res.status(404).json({ error: 'Review not found' });
+  }
+
+  res.json(review);
+});
+
+router.post('/reviews', (req: Request, res: Response) => {
+  const db = getDb();
+  const { userId, bookId, rating, reviewText } = req.body;
+
+  if (!userId || !bookId || !rating) {
+    return res.status(400).json({ error: 'userId, bookId, and rating are required' });
+  }
+
+  if (rating < 1 || rating > 5) {
+    return res.status(400).json({ error: 'Rating must be between 1 and 5' });
+  }
+
+  const existing = Review.getReviewByUserAndBook(db, userId, bookId);
+  if (existing) {
+    return res.status(409).json({ error: 'User has already reviewed this book' });
+  }
+
+  const review = Review.createReview(db, userId, bookId, rating, reviewText);
+  res.status(201).json(review);
+});
+
+router.patch('/reviews/:id', (req: Request, res: Response) => {
+  const db = getDb();
+  const reviewId = parseInt(req.params.id, 10);
+  const review = Review.updateReview(db, reviewId, req.body);
+
+  if (!review) {
+    return res.status(404).json({ error: 'Review not found' });
+  }
+
+  res.json(review);
+});
+
+router.delete('/reviews/:id', (req: Request, res: Response) => {
+  const db = getDb();
+  const reviewId = parseInt(req.params.id, 10);
+  const deleted = Review.deleteReview(db, reviewId);
+
+  if (!deleted) {
+    return res.status(404).json({ error: 'Review not found' });
+  }
+
+  res.status(204).send();
+});
+
+// Shelves API
+router.get('/shelves/user/:userId', (req: Request, res: Response) => {
+  const db = getDb();
+  const userId = parseInt(req.params.userId, 10);
+  const shelves = Shelf.getShelvesByUserId(db, userId);
+  res.json(shelves);
+});
+
+router.get('/shelves/:id', (req: Request, res: Response) => {
+  const db = getDb();
+  const shelfId = parseInt(req.params.id, 10);
+  const shelf = Shelf.getShelfWithBooks(db, shelfId);
+
+  if (!shelf) {
+    return res.status(404).json({ error: 'Shelf not found' });
+  }
+
+  res.json(shelf);
+});
+
+router.post('/shelves', (req: Request, res: Response) => {
+  const db = getDb();
+  const { userId, name } = req.body;
+
+  if (!userId || !name) {
+    return res.status(400).json({ error: 'userId and name are required' });
+  }
+
+  const shelf = Shelf.createShelf(db, userId, name);
+  res.status(201).json(shelf);
+});
+
+router.delete('/shelves/:id', (req: Request, res: Response) => {
+  const db = getDb();
+  const shelfId = parseInt(req.params.id, 10);
+  const deleted = Shelf.deleteShelf(db, shelfId);
+
+  if (!deleted) {
+    return res.status(404).json({ error: 'Shelf not found' });
+  }
+
+  res.status(204).send();
+});
+
+router.post('/shelves/:id/books', (req: Request, res: Response) => {
+  const db = getDb();
+  const shelfId = parseInt(req.params.id, 10);
+  const { bookId } = req.body;
+
+  if (!bookId) {
+    return res.status(400).json({ error: 'bookId is required' });
+  }
+
+  const added = Shelf.addBookToShelf(db, shelfId, bookId);
+  if (!added) {
+    return res.status(409).json({ error: 'Book already on shelf' });
+  }
+
+  res.status(201).json({ message: 'Book added to shelf' });
+});
+
+router.delete('/shelves/:id/books/:bookId', (req: Request, res: Response) => {
+  const db = getDb();
+  const shelfId = parseInt(req.params.id, 10);
+  const bookId = parseInt(req.params.bookId, 10);
+  const removed = Shelf.removeBookFromShelf(db, shelfId, bookId);
+
+  if (!removed) {
+    return res.status(404).json({ error: 'Book not found on shelf' });
+  }
+
+  res.status(204).send();
+});
+
+export default router;

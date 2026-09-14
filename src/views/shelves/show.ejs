@@ -1,0 +1,21 @@
+<%- include('../partials/header') %>
+
+<div class="shelf-detail">
+  <h1><%= shelf.name %></h1>
+  <p class="owner">Owner: <%= shelf.username %></p>
+
+  <div class="shelf-books">
+    <% if (shelf.books.length === 0) { %>
+      <p>This shelf is empty.</p>
+    <% } else { %>
+      <% shelf.books.forEach(book => { %>
+        <div class="book-card">
+          <h2><a href="/books/<%= book.book_id %>"><%= book.title %></a></h2>
+          <p class="author">by <%= book.author %></p>
+        </div>
+      <% }) %>
+    <% } %>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>

@@ -1,0 +1,15 @@
+<%- include('../partials/header') %>
+
+<h1>Shelves</h1>
+
+<div class="users-list">
+  <% users.forEach(user => { %>
+    <div class="user-card">
+      <h2><%= user.display_name %></h2>
+      <p class="username">@<%= user.username %></p>
+      <p><a href="/shelves/user/<%= user.id %>">View shelves</a></p>
+    </div>
+  <% }) %>
+</div>
+
+<%- include('../partials/footer') %>

@@ -1,0 +1,156 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  line-height: 1.6;
+  color: #333;
+  background: #f5f5f5;
+}
+
+nav {
+  background: #2c3e50;
+  padding: 1rem 2rem;
+  display: flex;
+  gap: 2rem;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+nav a:hover {
+  color: #3498db;
+}
+
+main {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 2rem;
+}
+
+h1 {
+  margin-bottom: 1.5rem;
+  color: #2c3e50;
+}
+
+.book-grid, .shelf-books {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.book-card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.book-card h2 {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.book-card a {
+  color: #2c3e50;
+  text-decoration: none;
+}
+
+.book-card a:hover {
+  color: #3498db;
+}
+
+.author {
+  color: #666;
+  font-style: italic;
+}
+
+.year {
+  color: #999;
+  font-size: 0.9rem;
+}
+
+.book-detail, .shelf-detail, .review-detail {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.description {
+  margin: 1.5rem 0;
+  padding: 1rem;
+  background: #f9f9f9;
+  border-left: 4px solid #3498db;
+}
+
+.rating {
+  font-size: 1.2rem;
+  color: #f39c12;
+  margin: 1rem 0;
+}
+
+.reviews {
+  margin-top: 2rem;
+}
+
+.review {
+  background: #f9f9f9;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 4px;
+}
+
+.review-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.review-header .rating {
+  font-size: 1rem;
+  margin: 0;
+}
+
+.users-list, .shelves-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.user-card, .shelf-card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.username {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.book-count {
+  color: #999;
+  margin-top: 0.5rem;
+}
+
+.error {
+  text-align: center;
+  padding: 3rem;
+}
+
+.error a {
+  display: inline-block;
+  margin-top: 1rem;
+  color: #3498db;
+}

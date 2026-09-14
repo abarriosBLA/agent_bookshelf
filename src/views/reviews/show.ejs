@@ -1,0 +1,25 @@
+<%- include('../partials/header') %>
+
+<div class="review-detail">
+  <h1>Review</h1>
+
+  <div class="review">
+    <div class="review-header">
+      <strong><%= review.display_name %></strong>
+      <span class="rating"><%= review.rating %>/5</span>
+    </div>
+
+    <div class="book-info">
+      <p>Book: <a href="/books/<%= review.book_id %>"><%= review.book_title %></a></p>
+      <p class="author">by <%= review.book_author %></p>
+    </div>
+
+    <% if (review.review_text) { %>
+      <div class="review-text">
+        <p><%= review.review_text %></p>
+      </div>
+    <% } %>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>

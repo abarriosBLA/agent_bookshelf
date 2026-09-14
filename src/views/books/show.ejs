@@ -1,0 +1,43 @@
+<%- include('../partials/header') %>
+
+<div class="book-detail">
+  <h1><%= book.title %></h1>
+  <p class="author">by <%= book.author %></p>
+
+  <% if (book.published_year) { %>
+    <p class="year">Published: <%= book.published_year %></p>
+  <% } %>
+
+  <% if (book.description) { %>
+    <div class="description">
+      <p><%= book.description %></p>
+    </div>
+  <% } %>
+
+  <% if (averageRating) { %>
+    <div class="rating">
+      <strong>Average Rating:</strong> <%= averageRating.toFixed(1) %> / 5
+    </div>
+  <% } %>
+
+  <div class="reviews">
+    <h2>Reviews</h2>
+    <% if (reviews.length === 0) { %>
+      <p>No reviews yet.</p>
+    <% } else { %>
+      <% reviews.forEach(review => { %>
+        <div class="review">
+          <div class="review-header">
+            <strong><%= review.display_name %></strong>
+            <span class="rating"><%= review.rating %>/5</span>
+          </div>
+          <% if (review.review_text) { %>
+            <p><%= review.review_text %></p>
+          <% } %>
+        </div>
+      <% }) %>
+    <% } %>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>

@@ -1,0 +1,14 @@
+<%- include('../partials/header') %>
+
+<h1><%= user.display_name %>'s Shelves</h1>
+
+<div class="shelves-list">
+  <% shelves.forEach(shelf => { %>
+    <div class="shelf-card">
+      <h2><a href="/shelves/<%= shelf.id %>"><%= shelf.name %></a></h2>
+      <p class="book-count"><%= shelf.books.length %> books</p>
+    </div>
+  <% }) %>
+</div>
+
+<%- include('../partials/footer') %>
