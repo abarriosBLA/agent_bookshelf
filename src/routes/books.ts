@@ -7,11 +7,22 @@ const router = Router();
 
 router.get('/', (req: Request, res: Response) => {
   const db = getDb();
-  // TODO: Implement search functionality
-  // The search UI will be added in the views, but the backend search
-  // is intentionally left as a homework exercise for agents to implement
   const books = Book.getAllBooks(db);
   res.render('books/index', { books });
+});
+
+router.get('/books/search', (req: Request, res: Response) => {
+  const db = getDb();
+  const query = req.query.q as string;
+  
+  // TODO: Implement search functionality
+  // This is a deliberate homework gap - agents should implement the search backend
+  // For now, return empty results with a message
+  res.send(`
+    <div class="search-message">
+      <p>Search functionality coming soon! This is a homework exercise for agents to implement.</p>
+    </div>
+  `);
 });
 
 router.get('/books/:id', (req: Request, res: Response) => {
@@ -27,6 +38,26 @@ router.get('/books/:id', (req: Request, res: Response) => {
   const averageRating = Review.getAverageRating(db, bookId);
 
   res.render('books/show', { book, reviews, averageRating });
+});
+
+router.post('/books/:id/reviews', (req: Request, res: Response) => {
+  const db = getDb();
+  const bookId = parseInt(req.params.id, 10);
+  const { userId, rating, reviewText } = req.body;
+
+  if (!userId || !rating) {
+    return res.status(400).send('<p class="error">User and rating are required</p>');
+  }
+
+  const existing = Review.getReviewByUserAndBook(db, parseInt(userId), bookId);
+  if (existing) {
+    return res.status(409).send('<p class="error">You have already reviewed this book</p>');
+  }
+
+  Review.createReview(db, parseInt(userId), bookId, parseInt(rating), reviewText);
+  
+  const reviews = Review.getReviewsByBookId(db, bookId);
+  res.render('books/reviews-list', { reviews });
 });
 
 export default router;

@@ -39,7 +39,17 @@ h1 {
   color: #2c3e50;
 }
 
-.book-grid, .shelf-books {
+h2 {
+  margin-bottom: 1rem;
+  color: #2c3e50;
+}
+
+h3 {
+  margin-bottom: 0.75rem;
+  color: #34495e;
+}
+
+.book-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 1.5rem;
@@ -51,6 +61,7 @@ h1 {
   padding: 1.5rem;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  position: relative;
 }
 
 .book-card h2 {
@@ -72,7 +83,7 @@ h1 {
   font-style: italic;
 }
 
-.year {
+.year, .isbn {
   color: #999;
   font-size: 0.9rem;
 }
@@ -91,14 +102,20 @@ h1 {
   border-left: 4px solid #3498db;
 }
 
-.rating {
+.rating-summary {
   font-size: 1.2rem;
-  color: #f39c12;
   margin: 1rem 0;
+}
+
+.stars {
+  color: #f39c12;
+  letter-spacing: 2px;
 }
 
 .reviews {
   margin-top: 2rem;
+  border-top: 2px solid #ecf0f1;
+  padding-top: 1.5rem;
 }
 
 .review {
@@ -106,6 +123,7 @@ h1 {
   padding: 1rem;
   margin-bottom: 1rem;
   border-radius: 4px;
+  border-left: 3px solid #3498db;
 }
 
 .review-header {
@@ -118,6 +136,125 @@ h1 {
 .review-header .rating {
   font-size: 1rem;
   margin: 0;
+  color: #f39c12;
+}
+
+.review-text {
+  margin: 0.5rem 0;
+}
+
+.review-date {
+  color: #999;
+  font-size: 0.85rem;
+  margin-top: 0.5rem;
+}
+
+.no-reviews, .empty-shelf {
+  color: #999;
+  font-style: italic;
+  padding: 1rem 0;
+}
+
+.add-review, .add-to-shelf {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background: #f9f9f9;
+  border-radius: 8px;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: #2c3e50;
+}
+
+.form-group select,
+.form-group textarea,
+.form-group input[type="text"] {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.form-group textarea {
+  resize: vertical;
+  font-family: inherit;
+}
+
+.btn-primary {
+  background: #3498db;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-primary:hover {
+  background: #2980b9;
+}
+
+.btn-remove {
+  background: #e74c3c;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  margin-top: 0.5rem;
+  transition: background 0.2s;
+}
+
+.btn-remove:hover {
+  background: #c0392b;
+}
+
+.search-container {
+  margin-bottom: 2rem;
+}
+
+#search-input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.2s;
+}
+
+#search-input:focus {
+  outline: none;
+  border-color: #3498db;
+}
+
+.htmx-indicator {
+  display: none;
+  color: #999;
+  font-style: italic;
+  margin-left: 1rem;
+}
+
+.htmx-request .htmx-indicator {
+  display: inline;
+}
+
+.search-message {
+  padding: 2rem;
+  text-align: center;
+  background: #fff3cd;
+  border: 1px solid #ffc107;
+  border-radius: 8px;
+  color: #856404;
 }
 
 .users-list, .shelves-list {
@@ -153,4 +290,11 @@ h1 {
   display: inline-block;
   margin-top: 1rem;
   color: #3498db;
+}
+
+p.error {
+  color: #e74c3c;
+  padding: 1rem;
+  background: #fdecea;
+  border-radius: 4px;
 }

@@ -1,0 +1,16 @@
+<% if (reviews.length === 0) { %>
+  <p class="no-reviews">No reviews yet. Be the first to review!</p>
+<% } else { %>
+  <% reviews.forEach(review => { %>
+    <div class="review">
+      <div class="review-header">
+        <strong><%= review.display_name %></strong>
+        <span class="rating"><%= '★'.repeat(review.rating) %><%= '☆'.repeat(5 - review.rating) %></span>
+      </div>
+      <% if (review.review_text) { %>
+        <p class="review-text"><%= review.review_text %></p>
+      <% } %>
+      <p class="review-date"><%= new Date(review.created_at).toLocaleDateString() %></p>
+    </div>
+  <% }) %>
+<% } %>

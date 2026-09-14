@@ -4,17 +4,29 @@
   <h1><%= shelf.name %></h1>
   <p class="owner">Owner: <%= shelf.username %></p>
 
-  <div class="shelf-books">
-    <% if (shelf.books.length === 0) { %>
-      <p>This shelf is empty.</p>
-    <% } else { %>
-      <% shelf.books.forEach(book => { %>
-        <div class="book-card">
-          <h2><a href="/books/<%= book.book_id %>"><%= book.title %></a></h2>
-          <p class="author">by <%= book.author %></p>
-        </div>
-      <% }) %>
-    <% } %>
+  <div class="add-to-shelf">
+    <h3>Add a Book</h3>
+    <form 
+      hx-post="/shelves/<%= shelf.id %>/books"
+      hx-target="#shelf-books-list"
+      hx-swap="outerHTML"
+      hx-on::after-request="if(event.detail.successful) this.reset()"
+    >
+      <div class="form-group">
+        <label for="bookId">Select a book:</label>
+        <select name="bookId" id="bookId" required>
+          <option value="">Choose a book...</option>
+          <% allBooks.forEach(book => { %>
+            <option value="<%= book.id %>"><%= book.title %> by <%= book.author %></option>
+          <% }) %>
+        </select>
+      </div>
+      <button type="submit" class="btn-primary">Add to Shelf</button>
+    </form>
+  </div>
+
+  <div id="shelf-books-list">
+    <%- include('books-list', { shelf }) %>
   </div>
 </div>
 

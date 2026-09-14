@@ -8,6 +8,10 @@
     <p class="year">Published: <%= book.published_year %></p>
   <% } %>
 
+  <% if (book.isbn) { %>
+    <p class="isbn">ISBN: <%= book.isbn %></p>
+  <% } %>
+
   <% if (book.description) { %>
     <div class="description">
       <p><%= book.description %></p>
@@ -15,28 +19,74 @@
   <% } %>
 
   <% if (averageRating) { %>
-    <div class="rating">
-      <strong>Average Rating:</strong> <%= averageRating.toFixed(1) %> / 5
+    <div class="rating-summary">
+      <strong>Average Rating:</strong> 
+      <span class="stars"><%= '★'.repeat(Math.round(averageRating)) %><%= '☆'.repeat(5 - Math.round(averageRating)) %></span>
+      <%= averageRating.toFixed(1) %> / 5
     </div>
   <% } %>
 
   <div class="reviews">
-    <h2>Reviews</h2>
-    <% if (reviews.length === 0) { %>
-      <p>No reviews yet.</p>
-    <% } else { %>
-      <% reviews.forEach(review => { %>
-        <div class="review">
-          <div class="review-header">
-            <strong><%= review.display_name %></strong>
-            <span class="rating"><%= review.rating %>/5</span>
+    <h2>Reviews (<%= reviews.length %>)</h2>
+    
+    <div id="reviews-list">
+      <% if (reviews.length === 0) { %>
+        <p class="no-reviews">No reviews yet. Be the first to review!</p>
+      <% } else { %>
+        <% reviews.forEach(review => { %>
+          <div class="review">
+            <div class="review-header">
+              <strong><%= review.display_name %></strong>
+              <span class="rating"><%= '★'.repeat(review.rating) %><%= '☆'.repeat(5 - review.rating) %></span>
+            </div>
+            <% if (review.review_text) { %>
+              <p class="review-text"><%= review.review_text %></p>
+            <% } %>
+            <p class="review-date"><%= new Date(review.created_at).toLocaleDateString() %></p>
           </div>
-          <% if (review.review_text) { %>
-            <p><%= review.review_text %></p>
-          <% } %>
+        <% }) %>
+      <% } %>
+    </div>
+
+    <div class="add-review">
+      <h3>Add a Review</h3>
+      <form 
+        hx-post="/books/<%= book.id %>/reviews"
+        hx-target="#reviews-list"
+        hx-swap="outerHTML"
+        hx-on::after-request="if(event.detail.successful) this.reset()"
+      >
+        
+        <div class="form-group">
+          <label for="userId">Review as:</label>
+          <select name="userId" id="userId" required>
+            <option value="">Select a user...</option>
+            <option value="1">Alice Chen</option>
+            <option value="2">Bob Martinez</option>
+            <option value="3">Carol Okafor</option>
+          </select>
         </div>
-      <% }) %>
-    <% } %>
+
+        <div class="form-group">
+          <label for="rating">Rating:</label>
+          <select name="rating" id="rating" required>
+            <option value="">Select rating...</option>
+            <option value="5">★★★★★ (5)</option>
+            <option value="4">★★★★☆ (4)</option>
+            <option value="3">★★★☆☆ (3)</option>
+            <option value="2">★★☆☆☆ (2)</option>
+            <option value="1">★☆☆☆☆ (1)</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="reviewText">Review (optional):</label>
+          <textarea name="reviewText" id="reviewText" rows="4" placeholder="What did you think?"></textarea>
+        </div>
+
+        <button type="submit" class="btn-primary">Submit Review</button>
+      </form>
+    </div>
   </div>
 </div>
 

@@ -1,0 +1,23 @@
+<div class="shelf-books">
+  <% if (shelf.books.length === 0) { %>
+    <p class="empty-shelf">This shelf is empty. Add a book above!</p>
+  <% } else { %>
+    <div class="book-grid">
+      <% shelf.books.forEach(book => { %>
+        <div class="book-card">
+          <h2><a href="/books/<%= book.book_id %>"><%= book.title %></a></h2>
+          <p class="author">by <%= book.author %></p>
+          <button 
+            class="btn-remove"
+            hx-delete="/shelves/<%= shelf.id %>/books/<%= book.book_id %>"
+            hx-target="#shelf-books-list"
+            hx-swap="outerHTML"
+            hx-confirm="Remove this book from the shelf?"
+          >
+            Remove
+          </button>
+        </div>
+      <% }) %>
+    </div>
+  <% } %>
+</div>
