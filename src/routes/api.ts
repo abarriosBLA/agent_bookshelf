@@ -16,7 +16,7 @@ router.get('/books', (req: Request, res: Response) => {
 
 router.get('/books/:id', (req: Request, res: Response) => {
   const db = getDb();
-  const bookId = parseInt(req.params.id, 10);
+  const bookId = parseInt(req.params.id as string, 10);
   const book = Book.getBookById(db, bookId);
 
   if (!book) {
@@ -40,7 +40,7 @@ router.post('/books', (req: Request, res: Response) => {
 
 router.patch('/books/:id', (req: Request, res: Response) => {
   const db = getDb();
-  const bookId = parseInt(req.params.id, 10);
+  const bookId = parseInt(req.params.id as string, 10);
   const book = Book.updateBook(db, bookId, req.body);
 
   if (!book) {
@@ -52,7 +52,7 @@ router.patch('/books/:id', (req: Request, res: Response) => {
 
 router.delete('/books/:id', (req: Request, res: Response) => {
   const db = getDb();
-  const bookId = parseInt(req.params.id, 10);
+  const bookId = parseInt(req.params.id as string, 10);
   const deleted = Book.deleteBook(db, bookId);
 
   if (!deleted) {
@@ -71,7 +71,7 @@ router.get('/users', (req: Request, res: Response) => {
 
 router.get('/users/:id', (req: Request, res: Response) => {
   const db = getDb();
-  const userId = parseInt(req.params.id, 10);
+  const userId = parseInt(req.params.id as string, 10);
   const user = User.getUserById(db, userId);
 
   if (!user) {
@@ -95,7 +95,7 @@ router.post('/users', (req: Request, res: Response) => {
 
 router.patch('/users/:id', (req: Request, res: Response) => {
   const db = getDb();
-  const userId = parseInt(req.params.id, 10);
+  const userId = parseInt(req.params.id as string, 10);
   const user = User.updateUser(db, userId, req.body);
 
   if (!user) {
@@ -107,7 +107,7 @@ router.patch('/users/:id', (req: Request, res: Response) => {
 
 router.delete('/users/:id', (req: Request, res: Response) => {
   const db = getDb();
-  const userId = parseInt(req.params.id, 10);
+  const userId = parseInt(req.params.id as string, 10);
   const deleted = User.deleteUser(db, userId);
 
   if (!deleted) {
@@ -120,21 +120,21 @@ router.delete('/users/:id', (req: Request, res: Response) => {
 // Reviews API
 router.get('/reviews/book/:bookId', (req: Request, res: Response) => {
   const db = getDb();
-  const bookId = parseInt(req.params.bookId, 10);
+  const bookId = parseInt(req.params.bookId as string, 10);
   const reviews = Review.getReviewsByBookId(db, bookId);
   res.json(reviews);
 });
 
 router.get('/reviews/user/:userId', (req: Request, res: Response) => {
   const db = getDb();
-  const userId = parseInt(req.params.userId, 10);
+  const userId = parseInt(req.params.userId as string, 10);
   const reviews = Review.getReviewsByUserId(db, userId);
   res.json(reviews);
 });
 
 router.get('/reviews/:id', (req: Request, res: Response) => {
   const db = getDb();
-  const reviewId = parseInt(req.params.id, 10);
+  const reviewId = parseInt(req.params.id as string, 10);
   const review = Review.getReviewById(db, reviewId);
 
   if (!review) {
@@ -167,7 +167,7 @@ router.post('/reviews', (req: Request, res: Response) => {
 
 router.patch('/reviews/:id', (req: Request, res: Response) => {
   const db = getDb();
-  const reviewId = parseInt(req.params.id, 10);
+  const reviewId = parseInt(req.params.id as string, 10);
   const review = Review.updateReview(db, reviewId, req.body);
 
   if (!review) {
@@ -179,7 +179,7 @@ router.patch('/reviews/:id', (req: Request, res: Response) => {
 
 router.delete('/reviews/:id', (req: Request, res: Response) => {
   const db = getDb();
-  const reviewId = parseInt(req.params.id, 10);
+  const reviewId = parseInt(req.params.id as string, 10);
   const deleted = Review.deleteReview(db, reviewId);
 
   if (!deleted) {
@@ -192,14 +192,14 @@ router.delete('/reviews/:id', (req: Request, res: Response) => {
 // Shelves API
 router.get('/shelves/user/:userId', (req: Request, res: Response) => {
   const db = getDb();
-  const userId = parseInt(req.params.userId, 10);
+  const userId = parseInt(req.params.userId as string, 10);
   const shelves = Shelf.getShelvesByUserId(db, userId);
   res.json(shelves);
 });
 
 router.get('/shelves/:id', (req: Request, res: Response) => {
   const db = getDb();
-  const shelfId = parseInt(req.params.id, 10);
+  const shelfId = parseInt(req.params.id as string, 10);
   const shelf = Shelf.getShelfWithBooks(db, shelfId);
 
   if (!shelf) {
@@ -223,7 +223,7 @@ router.post('/shelves', (req: Request, res: Response) => {
 
 router.delete('/shelves/:id', (req: Request, res: Response) => {
   const db = getDb();
-  const shelfId = parseInt(req.params.id, 10);
+  const shelfId = parseInt(req.params.id as string, 10);
   const deleted = Shelf.deleteShelf(db, shelfId);
 
   if (!deleted) {
@@ -235,7 +235,7 @@ router.delete('/shelves/:id', (req: Request, res: Response) => {
 
 router.post('/shelves/:id/books', (req: Request, res: Response) => {
   const db = getDb();
-  const shelfId = parseInt(req.params.id, 10);
+  const shelfId = parseInt(req.params.id as string, 10);
   const { bookId } = req.body;
 
   if (!bookId) {
@@ -252,8 +252,8 @@ router.post('/shelves/:id/books', (req: Request, res: Response) => {
 
 router.delete('/shelves/:id/books/:bookId', (req: Request, res: Response) => {
   const db = getDb();
-  const shelfId = parseInt(req.params.id, 10);
-  const bookId = parseInt(req.params.bookId, 10);
+  const shelfId = parseInt(req.params.id as string, 10);
+  const bookId = parseInt(req.params.bookId as string, 10);
   const removed = Shelf.removeBookFromShelf(db, shelfId, bookId);
 
   if (!removed) {

@@ -43,6 +43,13 @@ agent-bookshelf
 git clone <repository-url>
 cd agent_bookshelf
 npm install
+npm run build
+npm start
+```
+
+Or for development with hot reload:
+
+```bash
 npm run dev
 ```
 

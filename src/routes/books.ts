@@ -27,7 +27,7 @@ router.get('/books/search', (req: Request, res: Response) => {
 
 router.get('/books/:id', (req: Request, res: Response) => {
   const db = getDb();
-  const bookId = parseInt(req.params.id, 10);
+  const bookId = parseInt(req.params.id as string, 10);
   const book = Book.getBookById(db, bookId);
 
   if (!book) {
@@ -42,7 +42,7 @@ router.get('/books/:id', (req: Request, res: Response) => {
 
 router.post('/books/:id/reviews', (req: Request, res: Response) => {
   const db = getDb();
-  const bookId = parseInt(req.params.id, 10);
+  const bookId = parseInt(req.params.id as string, 10);
   const { userId, rating, reviewText } = req.body;
 
   if (!userId || !rating) {

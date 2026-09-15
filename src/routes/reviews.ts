@@ -6,7 +6,7 @@ const router = Router();
 
 router.get('/:id', (req: Request, res: Response) => {
   const db = getDb();
-  const reviewId = parseInt(req.params.id, 10);
+  const reviewId = parseInt(req.params.id as string, 10);
   const review = Review.getReviewById(db, reviewId);
 
   if (!review) {

@@ -3,13 +3,24 @@
   "version": "1.0.0",
   "description": "Goodreads-lite teaching playground for AI agents course",
   "type": "module",
+  "main": "dist/server.js",
   "bin": {
     "agent-bookshelf": "./bin/agent-bookshelf.js"
   },
+  "files": [
+    "dist",
+    "bin",
+    "src/db/schema.sql",
+    "src/db/seed.sql",
+    "src/views",
+    "src/public"
+  ],
   "scripts": {
     "dev": "tsx watch src/server.ts",
-    "build": "tsc",
+    "build": "tsc && npm run copy-assets",
+    "copy-assets": "node -e \"const {cpSync} = require('fs'); cpSync('src/db/schema.sql', 'dist/db/schema.sql'); cpSync('src/db/seed.sql', 'dist/db/seed.sql'); cpSync('src/views', 'dist/views', {recursive: true}); cpSync('src/public', 'dist/public', {recursive: true});\"",
     "start": "node dist/server.js",
+    "prepublishOnly": "npm run build",
     "test": "vitest",
     "test:run": "vitest run"
   },

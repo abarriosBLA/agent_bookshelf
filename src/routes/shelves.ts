@@ -14,7 +14,7 @@ router.get('/', (req: Request, res: Response) => {
 
 router.get('/user/:userId', (req: Request, res: Response) => {
   const db = getDb();
-  const userId = parseInt(req.params.userId, 10);
+  const userId = parseInt(req.params.userId as string, 10);
   const user = User.getUserById(db, userId);
 
   if (!user) {
@@ -29,7 +29,7 @@ router.get('/user/:userId', (req: Request, res: Response) => {
 
 router.get('/:id', (req: Request, res: Response) => {
   const db = getDb();
-  const shelfId = parseInt(req.params.id, 10);
+  const shelfId = parseInt(req.params.id as string, 10);
   const shelf = Shelf.getShelfWithBooks(db, shelfId);
 
   if (!shelf) {
@@ -42,7 +42,7 @@ router.get('/:id', (req: Request, res: Response) => {
 
 router.post('/:id/books', (req: Request, res: Response) => {
   const db = getDb();
-  const shelfId = parseInt(req.params.id, 10);
+  const shelfId = parseInt(req.params.id as string, 10);
   const { bookId } = req.body;
 
   if (!bookId) {
@@ -57,8 +57,8 @@ router.post('/:id/books', (req: Request, res: Response) => {
 
 router.delete('/:id/books/:bookId', (req: Request, res: Response) => {
   const db = getDb();
-  const shelfId = parseInt(req.params.id, 10);
-  const bookId = parseInt(req.params.bookId, 10);
+  const shelfId = parseInt(req.params.id as string, 10);
+  const bookId = parseInt(req.params.bookId as string, 10);
 
   Shelf.removeBookFromShelf(db, shelfId, bookId);
   
