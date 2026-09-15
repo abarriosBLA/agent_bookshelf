@@ -143,7 +143,7 @@ vite.config.ts.timestamp-*
 .vite/
 
 # TypeScript build output
-dist/
+# dist/ is committed to the repo so npx works without a build step
 
 # SQLite database files
 *.db

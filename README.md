@@ -20,6 +20,23 @@
 
 A Goodreads-lite application designed as a teaching playground for AI agents courses. Students install it locally and use AI agents (Claude Code, etc.) to complete homework assignments.
 
+## Prerequisites
+
+**Node.js 24 LTS** is required.
+
+| OS | Install |
+|---|---|
+| **macOS** | Download `.pkg` from [nodejs.org](https://nodejs.org) — Universal binary (Intel + Apple Silicon) |
+| **Windows** | Download `.msi` from [nodejs.org](https://nodejs.org) — tick "Tools for Native Modules" during install |
+| **Linux** | `curl -fsSL https://deb.nodesource.com/setup_24.x \| sudo -E bash - && sudo apt-get install -y nodejs` |
+
+Verify:
+
+```bash
+node -v   # should print v24.x.x
+npm -v    # should print 11.x.x
+```
+
 ## Quick Start
 
 ### Using npx (recommended)
@@ -37,17 +54,16 @@ npm install -g agent-bookshelf
 agent-bookshelf
 ```
 
-### Development mode
+### From source
 
 ```bash
 git clone <repository-url>
 cd agent_bookshelf
 npm install
-npm run build
 npm start
 ```
 
-Or for development with hot reload:
+`npm install` automatically builds the project. For development with hot reload:
 
 ```bash
 npm run dev

@@ -17,9 +17,10 @@
   ],
   "scripts": {
     "dev": "tsx watch src/server.ts",
-    "build": "tsc && npm run copy-assets",
+    "build": "node node_modules/typescript/bin/tsc && npm run copy-assets",
     "copy-assets": "node -e \"const {cpSync} = require('fs'); cpSync('src/db/schema.sql', 'dist/db/schema.sql'); cpSync('src/db/seed.sql', 'dist/db/seed.sql'); cpSync('src/views', 'dist/views', {recursive: true}); cpSync('src/public', 'dist/public', {recursive: true});\"",
     "start": "node dist/server.js",
+    "postinstall": "npm run build",
     "prepublishOnly": "npm run build",
     "test": "vitest",
     "test:run": "vitest run"
