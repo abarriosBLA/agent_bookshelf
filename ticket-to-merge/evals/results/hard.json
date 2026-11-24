@@ -1,0 +1,290 @@
+{
+  "summary": {
+    "label": "hard",
+    "set": "hard",
+    "model": "sonnet",
+    "subagentModel": "agent default (sonnet)",
+    "runs": 3,
+    "recall": 1,
+    "precision": 1,
+    "cost": 4.5578562
+  },
+  "results": [
+    {
+      "run": 1,
+      "kind": "planted",
+      "ok": true,
+      "cost": 0.8748371,
+      "seconds": 10,
+      "found": [
+        "H1",
+        "H2",
+        "H3",
+        "H4",
+        "H5",
+        "H6"
+      ],
+      "real": 7,
+      "total": 7,
+      "rows": [
+        {
+          "file": "package.json",
+          "line": 44,
+          "severity": "high",
+          "issue": "lodash added as a new dependency (used only for trim); the ticket forbids new dependencies.",
+          "matches": [
+            "H1"
+          ]
+        },
+        {
+          "file": "src/db/schema.sql",
+          "line": 54,
+          "severity": "high",
+          "issue": "New index added to the schema; the ticket forbids schema changes.",
+          "matches": [
+            "H3"
+          ]
+        },
+        {
+          "file": "src/models/book.ts",
+          "line": 46,
+          "severity": "high",
+          "issue": "An empty or whitespace-only query returns [] instead of all books, violating the acceptance criterion. The added tests expect 50 results.",
+          "matches": [
+            "H5"
+          ]
+        },
+        {
+          "file": "src/views/books/search-results.ejs",
+          "line": 2,
+          "severity": "high",
+          "issue": "Reflected XSS: the request query is written unescaped via <%- query %> in the no-results branch.",
+          "matches": [
+            "H4"
+          ]
+        },
+        {
+          "file": "src/routes/api.ts",
+          "line": 23,
+          "severity": "medium",
+          "issue": "The raw error stack trace is returned to the client in the 500 response (information disclosure).",
+          "matches": [
+            "H2"
+          ]
+        },
+        {
+          "file": "src/views/books/search-results.ejs",
+          "line": 2,
+          "severity": "medium",
+          "issue": "The no-results markup does not match what the HTML route tests assert, so those tests fail. The view renders 'No books found for \"<query>\"'.",
+          "matches": [
+            "H4"
+          ]
+        },
+        {
+          "file": "tests/search/search-routes.test.ts",
+          "line": 28,
+          "severity": "medium",
+          "issue": "The AC1 title-match API test is vacuous and cannot fail.",
+          "matches": [
+            "H6"
+          ]
+        }
+      ],
+      "missed": []
+    },
+    {
+      "run": 1,
+      "kind": "clean",
+      "ok": true,
+      "cost": 0.6556034000000001,
+      "seconds": 6,
+      "found": [],
+      "real": 0,
+      "total": 0,
+      "rows": [],
+      "missed": []
+    },
+    {
+      "run": 2,
+      "kind": "planted",
+      "ok": true,
+      "cost": 0.8611130000000002,
+      "seconds": 9,
+      "found": [
+        "H1",
+        "H2",
+        "H3",
+        "H4",
+        "H5",
+        "H6"
+      ],
+      "real": 6,
+      "total": 6,
+      "rows": [
+        {
+          "file": "package.json",
+          "line": 44,
+          "severity": "high",
+          "issue": "The diff adds lodash only to call trim(), and the ticket says 'No new dependencies'. String.prototype.trim does the same job.",
+          "matches": [
+            "H1"
+          ]
+        },
+        {
+          "file": "src/db/schema.sql",
+          "line": 54,
+          "severity": "high",
+          "issue": "The diff adds a new index to the schema, and the ticket says 'No schema changes'.",
+          "matches": [
+            "H3"
+          ]
+        },
+        {
+          "file": "src/models/book.ts",
+          "line": 46,
+          "severity": "high",
+          "issue": "An empty or whitespace-only query returns [] instead of all books. The ticket says an empty query returns all books, and the model and route tests assert 50 books.",
+          "matches": [
+            "H5"
+          ]
+        },
+        {
+          "file": "src/views/books/search-results.ejs",
+          "line": 2,
+          "severity": "high",
+          "issue": "The request query is printed unescaped with <%- query %>, which allows reflected XSS. The 'No books found for \"...\"' markup also differs from what the route tests assert, which is '<p class=\"no-results\">No books found</p>', so those tests would fail.",
+          "matches": [
+            "H4"
+          ]
+        },
+        {
+          "file": "src/routes/api.ts",
+          "line": 23,
+          "severity": "medium",
+          "issue": "The raw stack trace is returned to the client on an unexpected 500, which discloses internal paths and implementation details.",
+          "matches": [
+            "H2"
+          ]
+        },
+        {
+          "file": "tests/search/search-routes.test.ts",
+          "line": 28,
+          "severity": "medium",
+          "issue": "The AC1 title-match API test cannot fail on the search result. It never checks the status or the contents of the body.",
+          "matches": [
+            "H6"
+          ]
+        }
+      ],
+      "missed": []
+    },
+    {
+      "run": 2,
+      "kind": "clean",
+      "ok": true,
+      "cost": 0.6597174999999998,
+      "seconds": 5,
+      "found": [],
+      "real": 0,
+      "total": 0,
+      "rows": [],
+      "missed": []
+    },
+    {
+      "run": 3,
+      "kind": "planted",
+      "ok": true,
+      "cost": 0.8404919,
+      "seconds": 10,
+      "found": [
+        "H1",
+        "H2",
+        "H3",
+        "H4",
+        "H5",
+        "H6"
+      ],
+      "real": 7,
+      "total": 7,
+      "rows": [
+        {
+          "file": "package.json",
+          "line": 44,
+          "severity": "high",
+          "issue": "New runtime dependency lodash, used only for trim in src/models/book.ts. The spec constraint is 'No new dependencies'.",
+          "matches": [
+            "H1"
+          ]
+        },
+        {
+          "file": "src/db/schema.sql",
+          "line": 54,
+          "severity": "high",
+          "issue": "New index added to the schema. The spec constraint is 'No schema changes'.",
+          "matches": [
+            "H3"
+          ]
+        },
+        {
+          "file": "src/models/book.ts",
+          "line": 46,
+          "severity": "high",
+          "issue": "Empty or whitespace-only query returns [] but the spec says an empty query returns all books. The model's own tests (AC2) expect 50 books, so they fail.",
+          "matches": [
+            "H5"
+          ]
+        },
+        {
+          "file": "src/routes/api.ts",
+          "line": 23,
+          "severity": "high",
+          "issue": "The 500 response sends the raw stack trace to the client, which leaks internals.",
+          "matches": [
+            "H2"
+          ]
+        },
+        {
+          "file": "src/views/books/search-results.ejs",
+          "line": 2,
+          "severity": "high",
+          "issue": "Reflected XSS. The user-supplied query is written unescaped with <%- %> in the no-results branch. Queries up to 100 characters are accepted, which is enough for a payload.",
+          "matches": [
+            "H4"
+          ]
+        },
+        {
+          "file": "src/views/books/search-results.ejs",
+          "line": 2,
+          "severity": "medium",
+          "issue": "The no-results markup does not match what the route tests expect. The template emits 'No books found for \"...\"', but the tests look for '<p class=\"no-results\">No books found</p>'. The tests at lines 169, 179 and 192 of search-routes.test.ts will fail.",
+          "matches": [
+            "H4"
+          ]
+        },
+        {
+          "file": "tests/search/search-routes.test.ts",
+          "line": 28,
+          "severity": "medium",
+          "issue": "Weak assertion in the test for the AC1 title match. res.body is always defined, so the test cannot fail and does not check the criterion.",
+          "matches": [
+            "H6"
+          ]
+        }
+      ],
+      "missed": []
+    },
+    {
+      "run": 3,
+      "kind": "clean",
+      "ok": true,
+      "cost": 0.6660933,
+      "seconds": 5,
+      "found": [],
+      "real": 0,
+      "total": 0,
+      "rows": [],
+      "missed": []
+    }
+  ]
+}

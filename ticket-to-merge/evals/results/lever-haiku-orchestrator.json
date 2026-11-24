@@ -1,0 +1,277 @@
+{
+  "summary": {
+    "label": "lever-haiku-orchestrator",
+    "model": "haiku",
+    "subagentModel": "agent default (sonnet)",
+    "runs": 3,
+    "recall": 0.9444444444444444,
+    "precision": 0.8947368421052632,
+    "cost": 2.0265167400000004
+  },
+  "results": [
+    {
+      "run": 1,
+      "kind": "planted",
+      "ok": true,
+      "cost": 0.38492474000000004,
+      "seconds": 79,
+      "found": [
+        "P1",
+        "P2",
+        "P3",
+        "P4",
+        "P6"
+      ],
+      "real": 5,
+      "total": 5,
+      "rows": [
+        {
+          "file": "src/routes/books.ts",
+          "line": 17,
+          "severity": "high",
+          "issue": "HTML search route builds SQL by interpolating the raw query into a LIKE clause and bypasses Book.searchBooks, so there is no parameterisation, trimming, length limit or LIKE escaping",
+          "matches": [
+            "P1"
+          ]
+        },
+        {
+          "file": "src/routes/api.ts",
+          "line": 26,
+          "severity": "high",
+          "issue": "/books/search is registered after /books/:id, so GET /api/books/search is captured by :id and the search handler is unreachable",
+          "matches": [
+            "P3"
+          ]
+        },
+        {
+          "file": "src/models/book.ts",
+          "line": 42,
+          "severity": "high",
+          "issue": "LIKE pattern is built from the untrimmed query instead of trimmed, so padded input matches nothing",
+          "matches": [
+            "P4"
+          ]
+        },
+        {
+          "file": "src/models/book.ts",
+          "line": 38,
+          "severity": "medium",
+          "issue": "Length check uses >=, so a query of exactly 100 characters is rejected; the spec only rejects over 100. The boundary test is skipped, which hides it",
+          "matches": [
+            "P2"
+          ]
+        },
+        {
+          "file": "src/routes/api.ts",
+          "line": 31,
+          "severity": "medium",
+          "issue": "Validation errors are returned as JSON with the default 200 status instead of 400",
+          "matches": [
+            "P6"
+          ]
+        }
+      ],
+      "missed": [
+        "P5"
+      ]
+    },
+    {
+      "run": 1,
+      "kind": "clean",
+      "ok": true,
+      "cost": 0.26962304000000004,
+      "seconds": 6,
+      "found": [],
+      "real": 0,
+      "total": 0,
+      "rows": [],
+      "missed": []
+    },
+    {
+      "run": 2,
+      "kind": "planted",
+      "ok": true,
+      "cost": 0.41100889,
+      "seconds": 90,
+      "found": [
+        "P1",
+        "P2",
+        "P3",
+        "P4",
+        "P5",
+        "P6"
+      ],
+      "real": 6,
+      "total": 6,
+      "rows": [
+        {
+          "file": "src/models/book.ts",
+          "line": 38,
+          "severity": "high",
+          "issue": "Length check uses >= so a trimmed query of exactly 100 characters is rejected; the spec only rejects queries over 100.",
+          "matches": [
+            "P2"
+          ]
+        },
+        {
+          "file": "src/models/book.ts",
+          "line": 42,
+          "severity": "high",
+          "issue": "The LIKE pattern is built from the untrimmed `query`, not `trimmed`, so '  dune  ' does not match the same results as 'dune'.",
+          "matches": [
+            "P4"
+          ]
+        },
+        {
+          "file": "src/routes/api.ts",
+          "line": 26,
+          "severity": "high",
+          "issue": "GET /books/search is registered after GET /books/:id, so the param route captures 'search' and the search handler is never reached.",
+          "matches": [
+            "P3"
+          ]
+        },
+        {
+          "file": "src/routes/books.ts",
+          "line": 17,
+          "severity": "high",
+          "issue": "The HTML search route builds SQL by interpolating the raw `q` into the query string (SQL injection). It bypasses Book.searchBooks, so the parameterised query, length limit and LIKE escaping are all skipped.",
+          "matches": [
+            "P1"
+          ]
+        },
+        {
+          "file": "src/routes/api.ts",
+          "line": 31,
+          "severity": "medium",
+          "issue": "The validation error is returned with the default 200 status instead of 400.",
+          "matches": [
+            "P6"
+          ]
+        },
+        {
+          "file": "tests/search/search-model.test.ts",
+          "line": 87,
+          "severity": "medium",
+          "issue": "The exactly-100-characters boundary test is skipped, which hides the off-by-one in searchBooks.",
+          "matches": [
+            "P5"
+          ]
+        }
+      ],
+      "missed": []
+    },
+    {
+      "run": 2,
+      "kind": "clean",
+      "ok": true,
+      "cost": 0.27137279000000003,
+      "seconds": 7,
+      "found": [],
+      "real": 0,
+      "total": 0,
+      "rows": [],
+      "missed": []
+    },
+    {
+      "run": 3,
+      "kind": "planted",
+      "ok": true,
+      "cost": 0.42776074000000003,
+      "seconds": 82,
+      "found": [
+        "P1",
+        "P2",
+        "P3",
+        "P4",
+        "P5",
+        "P6"
+      ],
+      "real": 6,
+      "total": 8,
+      "rows": [
+        {
+          "file": "src/models/book.ts",
+          "line": 38,
+          "severity": "high",
+          "issue": "Length check uses >= so a query of exactly 100 characters is rejected; spec only errors above 100.",
+          "matches": [
+            "P2"
+          ]
+        },
+        {
+          "file": "src/models/book.ts",
+          "line": 42,
+          "severity": "high",
+          "issue": "LIKE pattern is built from the untrimmed query, so trimming has no effect on matching; trimmed is computed on line 37 but unused.",
+          "matches": [
+            "P4"
+          ]
+        },
+        {
+          "file": "src/routes/api.ts",
+          "line": 26,
+          "severity": "high",
+          "issue": "/books/search is registered after /books/:id, so :id captures 'search', parseInt gives NaN, and the endpoint returns 404 and never runs the search.",
+          "matches": [
+            "P3"
+          ]
+        },
+        {
+          "file": "src/routes/api.ts",
+          "line": 31,
+          "severity": "high",
+          "issue": "Validation error is returned with the default 200 status; route tests expect 400.",
+          "matches": [
+            "P6"
+          ]
+        },
+        {
+          "file": "src/routes/books.ts",
+          "line": 17,
+          "severity": "high",
+          "issue": "HTML search builds SQL by interpolating the raw query, which is SQL injection and violates the spec's parameterised-query rule. It also bypasses Book.searchBooks, so trim, length limit, non-string rejection and LIKE escaping never apply.",
+          "matches": [
+            "P1"
+          ]
+        },
+        {
+          "file": "src/routes/books.ts",
+          "line": 15,
+          "severity": "medium",
+          "issue": "HTML route coerces the query with String(), so ?q=a&q=b becomes 'a,b' and any length is accepted; array rejection and the 100-character limit are skipped.",
+          "matches": []
+        },
+        {
+          "file": "src/routes/books.ts",
+          "line": 21,
+          "severity": "medium",
+          "issue": "SearchValidationError catch branch is unreachable because the handler never calls searchBooks, so invalid queries never get a 400.",
+          "matches": []
+        },
+        {
+          "file": "tests/search/search-model.test.ts",
+          "line": 87,
+          "severity": "medium",
+          "issue": "Exactly-100-character boundary test is skipped with it.skip, which hides the off-by-one in searchBooks.",
+          "matches": [
+            "P5"
+          ]
+        }
+      ],
+      "missed": []
+    },
+    {
+      "run": 3,
+      "kind": "clean",
+      "ok": true,
+      "cost": 0.26182654,
+      "seconds": 6,
+      "found": [],
+      "real": 0,
+      "total": 0,
+      "rows": [],
+      "missed": []
+    }
+  ]
+}

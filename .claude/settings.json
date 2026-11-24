@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "deny": [
+      "Read(./.env)", "Read(./.env.*)",
+      "Edit(./.env)", "Edit(./.env.*)",
+      "Edit(./bookshelf.db)", "Edit(./bookshelf.db-*)",
+      "Edit(./src/db/seed.sql)",
+      "Bash(git push --force*)", "Bash(git push -f*)"
+    ]
+  }
+}

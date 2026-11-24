@@ -1,0 +1,16 @@
+{
+  "impl": "4246f9b",
+  "note": "Both cases start from main and add the BOOK-101 implementation at commit `impl`. The planted case then applies bugs.patch. Workspaces have no SPEC.md or CLAUDE.md, like a branch someone else wrote.",
+  "plants": [
+    { "id": "P1", "kind": "security", "file": "src/routes/books.ts", "anchor": "LIKE '%${q}%'", "keywords": "inject|string.?built|interpol|parameteri|concat|template", "what": "HTML route builds its own SQL from the request value" },
+    { "id": "P2", "kind": "correctness", "file": "src/models/book.ts", "anchor": ">= MAX_QUERY_LENGTH", "keywords": "100|off.by.one|>=|boundary|exactly|limit", "what": "off by one: exactly 100 characters is rejected" },
+    { "id": "P3", "kind": "correctness", "file": "src/routes/api.ts", "anchor": "router.get('/books/search'", "keywords": "order|after|before|:id|shadow|captur|unreach|regist|never", "what": "search route registered after /books/:id, so it is never reached" },
+    { "id": "P4", "kind": "correctness", "file": "src/models/book.ts", "anchor": "query.replace(", "keywords": "trim|whitespace|untrimmed|raw", "what": "pattern built from the untrimmed input" },
+    { "id": "P5", "kind": "tests", "file": "tests/search/search-model.test.ts", "anchor": "it.skip(", "keywords": "skip", "what": "the boundary test is skipped" },
+    { "id": "P6", "kind": "correctness", "file": "src/routes/api.ts", "anchor": "return res.json({ error: err.message })", "keywords": "400|status|200", "what": "validation error answered with 200" }
+  ],
+  "decoys": [
+    { "file": "src/models/book.ts", "anchor": "SEARCH_COLUMNS.map((c)", "what": "fixed column list interpolated into SQL; values are still bound parameters" },
+    { "file": "src/models/book.ts", "anchor": "const MAX_QUERY_LENGTH = 100", "what": "constant extracted" }
+  ]
+}

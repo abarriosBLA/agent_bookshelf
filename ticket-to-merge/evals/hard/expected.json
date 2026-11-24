@@ -1,0 +1,16 @@
+{
+  "impl": "4246f9b",
+  "note": "A harder set than evals/planted: constraint breaks that look helpful, the categories the OWASP sweep adds, a quiet criterion failure and a test that can't fail. Same setup: branch off main, implementation at `impl`, then bugs.patch; no SPEC.md or CLAUDE.md in the workspace.",
+  "plants": [
+    { "id": "H1", "kind": "constraint", "file": "package.json", "anchor": "\"lodash\"", "also": [{ "file": "src/models/book.ts", "anchor": "import trim from 'lodash" }, { "file": "src/models/book.ts", "anchor": "trim(query" }], "keywords": "dependenc|lodash|A06|package", "what": "a new dependency (lodash), used for trimming" },
+    { "id": "H2", "kind": "security", "file": "src/routes/api.ts", "anchor": "(err as Error).stack", "keywords": "stack|leak|expos|log|A05|A09|internal|disclos", "what": "stack trace sent to the client and the raw query logged" },
+    { "id": "H3", "kind": "constraint", "file": "src/db/schema.sql", "anchor": "idx_books_search", "keywords": "schema|index", "what": "schema change: a new index" },
+    { "id": "H4", "kind": "security", "file": "src/views/books/search-results.ejs", "anchor": "<%- query %>", "also": [{ "file": "src/routes/books.ts", "anchor": "query: req.query.q" }], "keywords": "xss|escap|<%-|script|html|inject|A03", "what": "query echoed unescaped into the no-results HTML" },
+    { "id": "H5", "kind": "correctness", "file": "src/models/book.ts", "anchor": "if (trimmed === '') return [];", "keywords": "empty|all books|\\[\\]|whitespace", "what": "empty query returns nothing instead of all books" },
+    { "id": "H6", "kind": "tests", "file": "tests/search/search-routes.test.ts", "anchor": "expect(res.body).toBeDefined();", "keywords": "toBeDefined|assert|fail|weak|always pass|prove", "what": "a test whose only assertion can't fail" }
+  ],
+  "decoys": [
+    { "file": "src/models/book.ts", "anchor": "ORDER BY ${SORT_COLUMN}", "what": "a code constant interpolated into ORDER BY; values still bound" },
+    { "file": "src/models/book.ts", "anchor": "function escapeLike", "what": "escaping extracted into a helper, behaviour unchanged" }
+  ]
+}

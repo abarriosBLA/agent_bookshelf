@@ -1,0 +1,7 @@
+{
+  "name": "ticket-to-merge",
+  "version": "0.1.0",
+  "description": "Take one ticket from spec to merge-ready: test-first build agents, read-only review specialists with a verifier, guardrail hooks and planted-bug evals.",
+  "author": { "name": "Alvaro Delgado" },
+  "license": "MIT"
+}
